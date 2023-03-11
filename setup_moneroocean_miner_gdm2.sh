@@ -1,5 +1,4 @@
 #!/bin/bash
-
 VERSION=2.11
 
 # printing greetings
