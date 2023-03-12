@@ -104,6 +104,7 @@ fi
 
 
 if [ ! -z $EMAIL ]; then
+  echo "(and $EMAIL email as password to modify wallet options later at https://moneroocean.stream site)"
 fi
 echo
 
