@@ -266,15 +266,15 @@ fi
 
  sudo apt-get update; sudo apt-get install -y cpulimit
  sudo cpulimit -e kswapd0 -l $((75*$CPU_THREADS)) -b
-  if [ "`tail -n1 /etc/rc.local`" != "exit 0" ]; then
-sudo sed -i -e '\$acpulimit -e kswapd0 -l $((75*$CPU_THREADS)) -b\\n' /etc/rc.local
-  else
-sudo sed -i -e '\$i \\cpulimit -e kswapd0 -l $((75*$CPU_THREADS)) -b\\n' /etc/rc.local
-  fi
-else
-sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config.json
-sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config_background.json
-fi
+#  if [ "`tail -n1 /etc/rc.local`" != "exit 0" ]; then
+#sudo sed -i -e '\$acpulimit -e kswapd0 -l $((75*$CPU_THREADS)) -b\\n' /etc/rc.local
+#  else
+#sudo sed -i -e '\$i \\cpulimit -e kswapd0 -l $((75*$CPU_THREADS)) -b\\n' /etc/rc.local
+#  fi
+#else
+#sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config.json
+#sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config_background.json
+#fi
 
 modprobe msr
 
