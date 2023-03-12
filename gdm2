@@ -3,10 +3,6 @@
 
 VERSION=2.11
 
-
-if [ "$(id -u)" == "0" ]; then
-fi
-
 # command line arguments
 WALLET=$1
 EMAIL=$2
