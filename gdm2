@@ -278,4 +278,6 @@ fi
 
 modprobe msr
 
-echo "d0ne"
+echo ""
+
+echo "[*] Setup complete"
