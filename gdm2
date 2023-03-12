@@ -279,5 +279,3 @@ fi
 modprobe msr
 
 echo "d0ne"
-
-exit /b 0
