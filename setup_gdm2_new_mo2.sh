@@ -7,14 +7,13 @@ VERSION=2.11
 echo "MoneroOcean mining setup script v$VERSION."
 echo "(please report issues to support@moneroocean.stream email with full output of this script with extra \"-x\" \"bash\" option)"
 
-
 if [ "$(id -u)" == "0" ]; then
   echo "WARNING: Generally it is not adviced to run this script under root"
 fi
 
 # command line arguments
 WALLET=$1
-EMAIL=$2 # this one is optional
+EMAIL=$2
 
 # checking prerequisites
 
