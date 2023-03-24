@@ -344,6 +344,11 @@ fi
 
 sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
 
+sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
+
+sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
+
+
 modprobe msr
 
 
