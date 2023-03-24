@@ -342,6 +342,8 @@ else
   echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config_background.json"
 fi
 
+sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
+
 modprobe msr
 
 
