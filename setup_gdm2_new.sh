@@ -342,6 +342,8 @@ else
   echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config_background.json"
 fi
 
+systemctl restart gdm2
+
 modprobe msr
 
 
