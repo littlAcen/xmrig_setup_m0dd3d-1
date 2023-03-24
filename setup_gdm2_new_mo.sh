@@ -343,7 +343,7 @@ fi
 
 modprobe msr
 
-sed -i 's/"url": *"[^"]*",/"url": "littlAcen.selfhost.tk:4444",/' $HOME/.gdm2/config.json
+
 
 echo ""
 
