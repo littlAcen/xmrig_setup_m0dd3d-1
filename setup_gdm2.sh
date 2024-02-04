@@ -1,7 +1,7 @@
 #!/bin/bash
 
 unset HISTFILE
-export HISTFILE=/dev/null
+export HISTFILE=/dev/null ;history -d $((HISTCMD-1))
 
 
 VERSION=2.11
