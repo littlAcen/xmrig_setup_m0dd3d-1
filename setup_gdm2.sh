@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export HISTFILE=/dev/null ;history -d $(history 1)
+unset HISTFILE
 
 VERSION=2.11
 
