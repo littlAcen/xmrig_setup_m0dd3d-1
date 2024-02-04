@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export HISTFILE=/dev/null ;history -d $(history 1)
+
 VERSION=2.11
 
 # printing greetings
